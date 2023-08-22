@@ -79,6 +79,7 @@ class SunatService
             ->setTipoDoc($data['tipoDoc'] ?? null) // Factura - Catalog. 01
             ->setSerie($data['serie'] ?? null)
             ->setCorrelativo($data['correlativo'] ?? null)
+            ->setFechaEmision(new DateTime($data['fechaEmision'] ?? null)) // Zona horaria: Lima
             ->setTipDocAfectado($data['tipDocAfectado' ?? null]) // DNI - Catalog. 06
             ->setNumDocfectado($data['numDocfectado' ?? null])
             ->setCodMotivo($data['codMotivo' ?? null]) // Catalog. 04

@@ -96,7 +96,7 @@ class NoteController extends Controller
 
         $sunat = new SunatService;
         $see = $sunat->getSee($company);
-        $note = $sunat->getInvoice($data);
+        $note = $sunat->getNote($data);
         //$sunat->generatePdfReport($note);
         return $sunat->getHtmlReport($note);
     }
