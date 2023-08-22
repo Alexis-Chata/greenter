@@ -10,6 +10,7 @@ use Greenter\Model\Company\Company;
 use Greenter\Model\Sale\FormaPagos\FormaPagoContado;
 use Greenter\Model\Sale\Invoice;
 use Greenter\Model\Sale\Legend;
+use Greenter\Model\Sale\Note;
 use Greenter\Model\Sale\SaleDetail;
 use Greenter\Report\HtmlReport;
 use Greenter\Report\PdfReport;
@@ -41,6 +42,47 @@ class SunatService
             ->setCorrelativo($data['correlativo'] ?? null)
             ->setFechaEmision(new DateTime($data['fechaEmision'] ?? null)) // Zona horaria: Lima
             ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
+            ->setTipoMoneda($data['tipoMoneda'] ?? null) // Sol - Catalog. 02
+            ->setCompany($this->getCompany($data['company']))
+            ->setClient($this->getClient($data['client']))
+
+            //Mto Operaciones
+            ->setMtoOperGravadas($data['mtoOperGravadas'] ?? null)
+            ->setMtoOperExoneradas($data['mtoOperExoneradas'] ?? null)
+            ->setMtoOperInafectas($data['mtoOperInafectas'] ?? null)
+            ->setMtoOperExportacion($data['mtoOperExportacion'] ?? null)
+            ->setMtoOperGratuitas($data['mtoOperGratuitas'] ?? null)
+
+            //Impuestos
+            ->setMtoIGV($data['mtoIGV'])
+            ->setMtoIGVGratuitas($data['mtoIGVGratuitas'])
+            ->setIcbper($data['icbper'])
+            ->setTotalImpuestos($data['totalImpuestos'])
+
+            //Totales
+            ->setValorVenta($data['valorVenta'])
+            ->setSubTotal($data['subTotal'])
+            ->setRedondeo($data['redondeo'])
+            ->setMtoImpVenta($data['mtoImpVenta'])
+
+            //Productos
+            ->setDetails($this->getDetails($data['details']))
+
+            //Leyendas
+            ->setLegends($this->getLegends($data['legends']));
+    }
+
+    public function getNote($data)
+    {
+        return (new Note())
+            ->setUblVersion($data['ublVersion'] ?? '2.1')
+            ->setTipoDoc($data['tipoDoc'] ?? null) // Factura - Catalog. 01
+            ->setSerie($data['serie'] ?? null)
+            ->setCorrelativo($data['correlativo'] ?? null)
+            ->setTipDocAfectado($data['tipDocAfectado' ?? null]) // DNI - Catalog. 06
+            ->setNumDocfectado($data['numDocfectado' ?? null])
+            ->setCodMotivo($data['codMotivo' ?? null]) // Catalog. 04
+            ->setDesMotivo($data['desMotivo' ?? null])
             ->setTipoMoneda($data['tipoMoneda'] ?? null) // Sol - Catalog. 02
             ->setCompany($this->getCompany($data['company']))
             ->setClient($this->getClient($data['client']))
