@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Services\SunatService;
 use Greenter\Report\XmlUtils;
 use Illuminate\Http\Request;
+use Luecano\NumeroALetras\NumeroALetras;
 
 class InvoiceController extends Controller
 {
@@ -74,6 +75,7 @@ class InvoiceController extends Controller
     }
 
     public function pdf(Request $request){
+
         $request->validate([
             'company' => 'required|array',
             'company.address' => 'required|array',
@@ -94,8 +96,8 @@ class InvoiceController extends Controller
         $sunat = new SunatService;
         $see = $sunat->getSee($company);
         $invoice = $sunat->getInvoice($data);
-
-        $pdf = $sunat->getHtmlReport($invoice);
+        //$sunat->generatePdfReport($invoice);
+        return $sunat->getHtmlReport($invoice);
     }
 
     public function setTotales(&$data){
